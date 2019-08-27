@@ -15,3 +15,12 @@ tf.reset_default_graph()
 #定义占位符
 x = tf.placeholder(tf.float32, [None, 784])
 y = tf.placeholder(tf.float32, [None, 10])
+
+W = tf.Variable(tf.random_normal([784, 10]))
+b = tf.Variable(tf.zeros([10]))
+
+pred = tf.nn.softmax(tf.matmul(x, W) + b)       #softmax分类
+cost = tf.reduce_mean(-tf.reduce_sum(y*tf.log(pred), reduction_indices=1))
+
+learning_rate = 0.01
+optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost)
